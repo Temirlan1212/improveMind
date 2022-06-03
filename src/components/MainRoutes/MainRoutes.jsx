@@ -41,6 +41,11 @@ const MainRoutes = () => {
       element: <AuthModal />,
       id: 6,
     },
+    {
+      path: "/test for git",
+      element: <AuthModal />,
+      id: 7,
+    },
   ];
   const PRIVATE_ROUTES = [
     {
