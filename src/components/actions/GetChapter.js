@@ -11,14 +11,17 @@ export const getChapterAction = createAsyncThunk(
   "get/chapter",
 
   async (_, { __, dispatch }) => {
+    console.log("this is action get chapter");
     const firestore = fire.firestore();
     let list = [];
 
     try {
-      const querySnapshot = await getDocs(collection(firestore, "chapter"));
+      // const querySnapshot = await getDocs(collection(firestore, "chapter"));
+      const citiesRef = firestore.collection("chapter");
+      const querySnapshot = await citiesRef.orderBy("chapter", "desc").get();
 
       querySnapshot.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() });
+        list.unshift({ id: doc.id, ...doc.data() });
       });
       dispatch(getChapter(list));
     } catch (err) {

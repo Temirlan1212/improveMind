@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import Authentification from "../Authentification/Authentification";
+import AuthModal from "../Authentification/AuthModal/AuthModal";
 import AddCard from "../CRUD/AddCard/AddCard";
 import CardList from "../CRUD/CardList/CardList";
 import Details from "../Details/Details";
@@ -27,6 +29,17 @@ const MainRoutes = () => {
       path: "/list/:id/:id2/:index",
       element: <OneChapterList />,
       id: 4,
+    },
+
+    {
+      path: "/register",
+      element: <Authentification />,
+      id: 5,
+    },
+    {
+      path: "/authmodal",
+      element: <AuthModal />,
+      id: 6,
     },
   ];
   const PRIVATE_ROUTES = [

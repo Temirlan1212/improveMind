@@ -18,6 +18,7 @@ let CardSlices = createSlice({
           await addDoc(collection(firestore, "messages"), {
             text: action.payload.text,
             description: action.payload.description,
+            img: action.payload.img,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
         } catch (error) {
@@ -34,8 +35,20 @@ let CardSlices = createSlice({
       console.log("this is one product");
       state.cards = action.payload;
     },
+    deleteProduct(state, action) {
+      const firestore = fire.firestore();
+      console.log("this is delete product");
+      const deleteProduct2 = async () => {
+        const res = await firestore
+          .collection("messages")
+          .doc(action.payload)
+          .delete();
+      };
+      deleteProduct2();
+    },
   },
 });
 
-export const { addCard, getPoducts, getOneProduct } = CardSlices.actions;
+export const { addCard, getPoducts, getOneProduct, deleteProduct } =
+  CardSlices.actions;
 export default CardSlices.reducer;

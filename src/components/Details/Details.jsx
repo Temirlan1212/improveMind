@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getChapterAction } from "../actions/GetChapter";
 import { getOneCard } from "../actions/GetOneProduct";
+import Navbar from "../Navbar/Navbar";
 import { addChapter } from "../slices/ChapterSlices/ChapterSlices";
 
 const Details = () => {
@@ -17,7 +18,6 @@ const Details = () => {
 
   const card = useSelector((state) => state.card.cards);
   const chapterFromStore = useSelector((state) => state.chapter.chapter);
-  console.log(chapterFromStore);
 
   useEffect(() => {
     dispatch(getOneCard(params.id));
@@ -27,8 +27,12 @@ const Details = () => {
     dispatch(getChapterAction());
   }, []);
 
+  console.log(chapterFromStore);
+
   const handleValues = () => {
-    dispatch(addChapter(chapter));
+    dispatch(addChapter({ chapter, id: params.id }));
+
+    dispatch(getChapterAction());
     setChapter("");
   };
 
@@ -36,15 +40,22 @@ const Details = () => {
 
   return (
     <div>
+      <Navbar />
       {chapterFromStore.map((elem) => (
-        <li
-          onClick={() =>
-            navigate(`/list/${params.id}/${elem.id}/${elem.chapter}`)
-          }
-          style={{ cursor: "pointer" }}
-        >
-          {elem.chapter}
-        </li>
+        <>
+          {elem.id === params.id ? (
+            <li
+              onClick={() =>
+                navigate(`/list/${params.id}/${elem.id}/${elem.chapter}`)
+              }
+              style={{ cursor: "pointer" }}
+            >
+              {elem.chapter}
+            </li>
+          ) : (
+            ""
+          )}
+        </>
       ))}
 
       {card.text}

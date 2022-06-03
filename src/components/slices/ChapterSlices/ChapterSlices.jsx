@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 import fire from "../../../fire";
 import firebase from "firebase/compat/app";
+import { getChapterAction } from "../../actions/GetChapter";
 
 let ChapterSlices = createSlice({
   name: "chapter",
@@ -17,7 +18,8 @@ let ChapterSlices = createSlice({
         console.log(action.payload);
         try {
           await addDoc(collection(firestore, "chapter"), {
-            chapter: action.payload,
+            chapter: action.payload.chapter,
+            id: action.payload.id,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
         } catch (error) {

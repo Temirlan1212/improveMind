@@ -5,10 +5,10 @@ import "./Switch.css";
 
 const Switch = () => {
   const dispatch = useDispatch();
+
   return (
     <div>
       <div class="btn-container">
-        <i class="fa fa-sun-o" aria-hidden="true"></i>
         <label class="switch btn-color-mode-switch">
           <input
             type="checkbox"
