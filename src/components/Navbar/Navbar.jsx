@@ -69,6 +69,8 @@ import Switch from "../Home/Switch/Switch";
 import { useSelector } from "react-redux";
 import { GetAuthEmail } from "../actions/GetAuthEmail";
 import { useDispatch } from "react-redux";
+import Avatar from "@mui/material/Avatar";
+import { getCard } from "../actions/GetCards";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -111,6 +113,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  let cards = useSelector((state) => state.card.cards);
+  console.log(cards);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -118,6 +122,7 @@ export default function Navbar() {
 
   React.useEffect(() => {
     dispatch(GetAuthEmail());
+    dispatch(getCard());
   }, []);
 
   const user = useSelector((state) => state.auth.email);
@@ -265,7 +270,7 @@ export default function Navbar() {
               color="inherit"
             >
               <Badge
-                badgeContent={4}
+                badgeContent={0}
                 color="error"
                 onClick={() => navigate("/")}
               >
@@ -278,7 +283,7 @@ export default function Navbar() {
               color="inherit"
             >
               <Badge
-                badgeContent={17}
+                badgeContent={cards.length}
                 color="error"
                 onClick={() => navigate("/list")}
               >
@@ -295,8 +300,11 @@ export default function Navbar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
-              <img src={user.photoUrl} />
+              <Avatar
+                alt="Remy Sharp"
+                src={user.photoUrl}
+                sx={{ width: "30px", height: "30px" }}
+              />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

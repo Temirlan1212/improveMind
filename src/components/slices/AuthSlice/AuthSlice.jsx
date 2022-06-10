@@ -43,7 +43,7 @@ let AuthSlice = createSlice({
           let user = userCredential.user;
           alert(user.email);
         })
-        .catch((err) => ((state.error = err.message), alert(err.message)));
+        .catch((err) => /*(state.error = err.message),*/ alert(err.message));
       console.log("this is signIn");
     },
 

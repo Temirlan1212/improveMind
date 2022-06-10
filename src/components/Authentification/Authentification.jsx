@@ -8,6 +8,8 @@ import { onAuthChange, signIn, signUp } from "../slices/AuthSlice/AuthSlice";
 import { signOut } from "firebase/auth";
 import "./Authentification.css";
 import AuthModal from "./AuthModal/AuthModal";
+import AuthWithGoogle from "./AuthWithGoogle";
+import AuthWithPhoneNumber from "./AuthWithPhoneNumber";
 
 const Authentification = () => {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ const Authentification = () => {
   const handleImageChange = (e) => {
     // console.log(e.target.files[])
     if (e.target.files) {
+      console.log(e.target.files);
       const filesArray = Array.from(e.target.files).map((file) =>
         URL.createObjectURL(file)
       );
@@ -41,6 +44,7 @@ const Authentification = () => {
       // console.log("filesArray: ", filesArray);
 
       setFile((prevImages) => prevImages.concat(filesArray));
+
       Array.from(e.target.files).map(
         (file) => URL.revokeObjectURL(file) // avoid memory leak
       );
@@ -83,7 +87,12 @@ const Authentification = () => {
     let auth = fire.auth();
     signOut(auth)
       .then(() => {
-        alert("sussecfully signed out");
+        console.log(auth);
+        if (auth === "no email") {
+          alert("sussecfully signed out");
+        } else {
+          alert("you already has signed out");
+        }
       })
       .catch((error) => {
         alert(`doesn't signed out: ${error}`);
@@ -120,7 +129,7 @@ const Authentification = () => {
                     />
                     <p
                       onClick={() => setIsLogIn(false)}
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", color: "black" }}
                     >
                       Don't have an account?
                     </p>
@@ -134,7 +143,7 @@ const Authentification = () => {
                     />
                     <p
                       onClick={() => setIsLogIn(true)}
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer", color: "black" }}
                     >
                       Already has an account?
                     </p>
@@ -155,6 +164,8 @@ const Authentification = () => {
             </div>
           </div>
         </section>
+        <AuthWithGoogle />
+        <AuthWithPhoneNumber />
       </div>
     </div>
   );

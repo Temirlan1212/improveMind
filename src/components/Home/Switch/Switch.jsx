@@ -5,6 +5,8 @@ import "./Switch.css";
 
 const Switch = () => {
   const dispatch = useDispatch();
+  let color = localStorage.getItem("switch");
+  console.log(color);
 
   return (
     <div>
@@ -18,7 +20,7 @@ const Switch = () => {
             onClick={() => dispatch(addSwitch())}
           />
           <label
-            for="color_mode"
+            // for="color_mode"
             data-on="Dark"
             data-off="Light"
             class="btn-color-mode-switch-inner"
