@@ -12,7 +12,7 @@ import { getOneCard } from "../actions/GetOneProduct";
 import { createNextState } from "@reduxjs/toolkit";
 import firebase from "firebase/compat/app";
 import { addRating } from "../slices/RatingSlice/RatingSlice";
-import { getOneRatingAsync } from "../actions/GetOneRating";
+import { getRatingsAction } from "../actions/GetRatings";
 
 export default function BasicRating({ item }) {
   const firestore = fire.firestore();
@@ -21,41 +21,52 @@ export default function BasicRating({ item }) {
   const { user } = useParams();
 
   const { user: currentUser } = useSelector((state) => state.auth.email);
-  const ratingOne = useSelector((state) => state.rating.rating);
-  const { mark } = useSelector((state) => state.rating.rating);
-
-  const idCreated = id + user;
-
-  console.log(idCreated);
+  const ratings = useSelector((state) => state.rating.ratings);
+  const createdId = id + user;
 
   useEffect(() => {
-    dispatch(getOneRatingAsync(id + user));
+    dispatch(getRatingsAction());
   }, []);
 
-  console.log(ratingOne);
+  console.log(ratings);
 
   const updateRatings = async (id, update) => {
-    await firestore.collection("ratings").doc(id).update({ mark: update });
-    dispatch(getOneRatingAsync(id));
+    // await firestore.collection("ratings").doc(id).update({ mark: update });
+
+    firestore
+      .collection("ratings")
+      .where("customId", "==", createdId)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (document) {
+          document.ref.update({ mark: update });
+        });
+      })
+      .catch((err) => {
+        console.log("err", "=>", err);
+      });
+
+    dispatch(getRatingsAction());
   };
 
   const putRating = (id, newValue) => {
     let user = {
+      customId: createdId,
       email: currentUser,
       mark: newValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
-    let checkUser = ratingOne.email === currentUser;
+    let checkUser = ratings.some((item) => item.email === currentUser);
     console.log(checkUser);
 
     if (checkUser) {
-      updateRatings(idCreated, newValue);
+      updateRatings(id, newValue);
     } else {
-      dispatch(addRating({ user, id, currentUser }));
+      dispatch(addRating({ user, id }));
     }
 
-    dispatch(getOneRatingAsync(idCreated));
+    dispatch(getRatingsAction(id));
   };
 
   return (
@@ -67,7 +78,7 @@ export default function BasicRating({ item }) {
       <Typography component="legend">Controlled</Typography>
       <Rating
         name="simple-controlled"
-        value={mark === undefined ? 0 : mark}
+        // value={mark === undefined ? 0 : mark}
         onChange={(event, newValue) => {
           putRating(id, newValue);
         }}
