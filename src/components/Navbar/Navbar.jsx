@@ -1,53 +1,7 @@
-// import React from "react";
-// import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import Switch from "../Home/Switch/Switch";
-// import "./Navbar.css";
-
-// const Navbar = () => {
-//   const navigate = useNavigate();
-//   const themeColor = useSelector((state) => state.switch.switch);
-//   return (
-//     <div>
-//       <nav class={themeColor === "light" ? "navbar" : "navbarDark"}>
-//         <div class="navlogo">LOGO</div>
-
-//         <a href="#" class="ham">
-//           <span class="bar"></span>
-//           <span class="bar"></span>
-//           <span class="bar"></span>
-//         </a>
-
-// <div class="navlinks">
-//   <ul>
-//     <li>
-//       <a onClick={() => navigate("/")}>home</a>
-//     </li>
-//     <li>
-//       <a onClick={() => navigate("/add")}>admin</a>
-//     </li>
-//     <li>
-//       <a onClick={() => navigate("/list")}>manga</a>
-//     </li>
-//     <li>
-//       <a onClick={() => navigate("/register")}>Authentification</a>
-//     </li>
-//     <li>
-//       <a>
-//         <Switch class="switch-nav" />
-//       </a>
-//     </li>
-//   </ul>
-// </div>
-//       </nav>
-//     </div>
-//   );
-// };
-
-// export default Navbar;
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -71,17 +25,29 @@ import { GetAuthEmail } from "../actions/GetAuthEmail";
 import { useDispatch } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import { getCard } from "../actions/GetCards";
+import "./Navbar.css";
+import { menuToggleMiddle } from "../slices/MenuToggleSlice/MenuToggleSlice";
+
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import PersonIcon from "@mui/icons-material/Person";
+import { signOut } from "firebase/auth";
+import fire from "../../fire";
+import { useTranslation } from "react-i18next";
+import Lang from "./Lang/Lang";
+import Drawer from "../Drawer/Drawer";
+import TemporaryDrawer from "../Drawer/Drawer";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: "rgba(255, 255, 255, 10)",
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
   width: "100%",
+  height: "36px",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -89,17 +55,19 @@ const Search = styled("div")(({ theme }) => ({
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
+  padding: theme.spacing(0, 1, 0, 1),
+  borderRadius: "3px",
   height: "100%",
   position: "absolute",
   pointerEvents: "none",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  backgroundColor: "#d9534f",
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: "black",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -113,10 +81,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  let cards = useSelector((state) => state.card.cards);
-  console.log(cards);
-  const navigate = useNavigate();
+  const { t } = useTranslation();
+  const user = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const menuToggle = useSelector((state) => state.menuToggle.menuToggle);
+  let cards = useSelector((state) => state.card.cards);
+
+  const toggleBtn = () => {
+    if (menuToggle) {
+      dispatch(menuToggleMiddle(false));
+    } else {
+      dispatch(menuToggleMiddle(true));
+    }
+  };
+  console.log(menuToggle);
+  console.log(cards);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -125,7 +106,6 @@ export default function Navbar() {
     dispatch(getCard());
   }, []);
 
-  const user = useSelector((state) => state.auth.email);
   console.log(user);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -135,44 +115,37 @@ export default function Navbar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const signOut1 = () => {
+    let auth = fire.auth();
+    signOut(auth)
+      .then(() => {
+        console.log(auth);
+        if (auth === "no email") {
+          alert("sussecfully signed out");
+        } else {
+          alert("you already has signed out");
+        }
+      })
+      .catch((error) => {
+        alert(`doesn't signed out: ${error}`);
+      });
+  };
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={(handleMenuClose, () => navigate("/register"))}>
-        register
-      </MenuItem>
-      <MenuItem onClick={(handleMenuClose, () => navigate("/add"))}>
-        adming page
-      </MenuItem>
-    </Menu>
-  );
+  // const renderMenu = (
+
+  // );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -191,46 +164,82 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
+      <Box
+        sx={{
+          display: "flex",
+          marginLeft: "10px",
+          flexDirection: "column",
+        }}
+      >
+        <Box
+          edge="start"
+          sx={{
+            fontSize: "18px",
+            color: "white",
+            cursor: "pointer",
+            marginTop: "5px",
+            "&:hover": {
+              color: "#d9534f",
+            },
+            display: "flex",
+            mr: "20px",
+            fontFamily: "'PT Sans Narrow', sans-serif",
+            color: "black",
+          }}
+          onClick={() => navigate("/signin")}
         >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
+          <div>
+            <PersonIcon
+              fontSize="small"
+              sx={{ marginTop: "2px", fontSize: "20px" }}
+            />{" "}
+          </div>{" "}
+          {t("signIn")}
+          {}
+        </Box>
+        <Box
+          edge="start"
+          sx={{
+            fontSize: "18px",
+            color: "white",
+            cursor: "pointer",
+            marginTop: "5px",
+            display: "flex",
+            "&:hover": {
+              color: "#d9534f",
+            },
+            color: "black",
+            fontFamily: "'PT Sans Narrow', sans-serif",
+          }}
+          onClick={() => navigate("/register")}
         >
-          <AccountCircle />
-          <div>tima</div>
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+          <div>
+            <ExitToAppIcon sx={{ marginTop: "5px", fontSize: "15px" }} />
+            &nbsp;
+          </div>
+          {t("signUp")}
+        </Box>
+      </Box>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}>
-        <Toolbar>
+      <AppBar
+        position="absolute"
+        sx={{
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          height: "60px",
+          marginTop: "-5px",
+        }}
+      >
+        <Toolbar
+          sx={{
+            maxWidth: "1200px",
+            width: "90%",
+            margin: "0 auto",
+          }}
+        >
           <IconButton
             size="large"
             edge="start"
@@ -240,79 +249,142 @@ export default function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+
+          <Box
+            edge="start"
+            sx={{
+              fontSize: "18px",
+              color: "white",
+              cursor: "pointer",
+              marginTop: "5px",
+              display: "flex",
+              alignItems: "center",
+              "&:hover": {
+                color: "#d9534f",
+              },
+            }}
+            onClick={() => navigate("/list")}
           >
-            MUI
-          </Typography>
-          <Search>
+            {t("manga")}
+            <IconButton
+              color="inherit"
+              sx={{
+                fontSize: "20px",
+                marginBottom: "12px",
+                marginLeft: "-8px",
+              }}
+            >
+              ⌄
+            </IconButton>
+          </Box>
+
+          <Search sx={{ display: { xs: "none", md: "flex" } }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder={t("search")}
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+
+          <TemporaryDrawer />
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large">
-              <Badge>
+          <Box sx={{ display: { xs: "flex", md: "flex" } }}>
+            <IconButton
+              aria-label="show 4 new mails"
+              color="inherit"
+              sx={{ marginTop: "10px" }}
+            >
+              <Badge badgeContent={0} color="error">
                 <Switch />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge
-                badgeContent={0}
-                color="error"
-                onClick={() => navigate("/")}
+          </Box>
+          <Lang />
+          <Box>
+            {user.length !== 0 ? (
+              <IconButton
+                size="large"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={toggleBtn}
+                color="inherit"
+                sx={{ position: "relative" }}
               >
-                <HomeIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge
-                badgeContent={cards.length}
-                color="error"
-                onClick={() => navigate("/list")}
+                <Avatar
+                  alt="Remy Sharp"
+                  src={user.photoUrl}
+                  sx={{ width: "30px", height: "30px" }}
+                />
+              </IconButton>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  marginLeft: "30px",
+                  display: { xs: "none", md: "flex" },
+                }}
               >
-                <CategoryIcon />
-              </Badge>
-            </IconButton>
-
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <Avatar
-                alt="Remy Sharp"
-                src={user.photoUrl}
-                sx={{ width: "30px", height: "30px" }}
-              />
-            </IconButton>
+                <Box
+                  edge="start"
+                  sx={{
+                    fontSize: "18px",
+                    color: "white",
+                    cursor: "pointer",
+                    marginTop: "5px",
+                    "&:hover": {
+                      color: "#d9534f",
+                    },
+                    display: "flex",
+                    mr: "20px",
+                    fontFamily: "'PT Sans Narrow', sans-serif",
+                  }}
+                  onClick={() => navigate("/signin")}
+                >
+                  <div>
+                    <PersonIcon
+                      fontSize="small"
+                      sx={{ marginTop: "2px", fontSize: "20px" }}
+                    />{" "}
+                  </div>{" "}
+                  {t("signIn")}
+                  {}
+                </Box>
+                <Box
+                  edge="start"
+                  sx={{
+                    fontSize: "18px",
+                    color: "white",
+                    cursor: "pointer",
+                    marginTop: "5px",
+                    display: "flex",
+                    "&:hover": {
+                      color: "#d9534f",
+                    },
+                    fontFamily: "'PT Sans Narrow', sans-serif",
+                  }}
+                  onClick={() => navigate("/register")}
+                >
+                  <div>
+                    <ExitToAppIcon
+                      sx={{ marginTop: "5px", fontSize: "15px" }}
+                    />
+                    &nbsp;
+                  </div>
+                  {t("signUp")}
+                </Box>
+              </Box>
+            )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"
               aria-controls={mobileMenuId}
-              aria-haspopup="true"
+              aria-haspopup="false"
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
@@ -322,7 +394,21 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+
+      <div
+        className="menu-nav-open"
+        style={{ display: menuToggle ? "block" : "none" }}
+      >
+        <div className="menu-nav-open-text" onClick={() => signOut1()}>
+          sign out
+        </div>
+        <div
+          className="menu-nav-open-text"
+          onClick={(handleMenuClose, () => navigate("/add"))}
+        >
+          adming page
+        </div>
+      </div>
     </Box>
   );
 }

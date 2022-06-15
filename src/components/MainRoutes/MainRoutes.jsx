@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Authentification from "../Authentification/Authentification";
 import AuthModal from "../Authentification/AuthModal/AuthModal";
+import AuthWithPhoneNumber from "../Authentification/AuthWithPhoneNumber";
+import SignIn from "../Authentification/SignIn";
 import AddCard from "../CRUD/AddCard/AddCard";
 import CardList from "../CRUD/CardList/CardList";
 import Details from "../Details/Details";
@@ -40,6 +42,16 @@ const MainRoutes = () => {
       path: "/authmodal",
       element: <AuthModal />,
       id: 6,
+    },
+    {
+      path: "/authphone",
+      element: <AuthWithPhoneNumber />,
+      id: 7,
+    },
+    {
+      path: "/signin",
+      element: <SignIn />,
+      id: 8,
     },
   ];
   const PRIVATE_ROUTES = [

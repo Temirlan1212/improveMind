@@ -6,31 +6,42 @@ import Switch from "./Switch/Switch";
 import "./Home.css";
 import Navbar from "../Navbar/Navbar";
 import "../../Background.css";
+import { useDispatch } from "react-redux";
+import { addSwitch } from "../slices/SwitchSlices/SwitchSlices";
+import Card from "../CRUD/Card/Card";
+import { getCard } from "../actions/GetCards";
 
 const Home = () => {
+  // const themeColor = useSelector((state) => state.switch.switch);
   const themeColor = useSelector((state) => state.switch.switch);
-
-  useEffect(() => {
-    localStorage.setItem("switch", "light");
-  }, []);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  let cards = useSelector((state) => state.card.cards);
+
+  console.log(themeColor);
+  useEffect(() => {
+    dispatch(getCard());
+    dispatch(addSwitch());
+  }, []);
+
+  if (cards.length === 0) {
+    return <div>loading...</div>;
+  }
 
   return (
     <div>
       <Navbar />
 
       <div>
-        <div class={themeColor === "light" ? "parallax img2" : "parallax img1"}>
+        <div class={themeColor === "dark" ? "parallax img2" : "parallax img1"}>
           <div class="par">
-            This is an example of how Parallax background works. If you see this
-            code from a mobile device you won't experience the outcome as
-            Parallax usually doesn't work on devices with a smaller width unless
-            specified.
+            <Card />
           </div>
         </div>
         <div>
           <div
-            class={themeColor === "light" ? "parallax img2" : "parallax img1"}
+            class={themeColor === "dark" ? "parallax img2" : "parallax img1"}
           >
             <div class="par">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -43,7 +54,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div class={themeColor === "light" ? "parallax img2" : "parallax img1"}>
+        <div class={themeColor === "dark" ? "parallax img2" : "parallax img1"}>
           <div class="par par3">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -54,7 +65,7 @@ const Home = () => {
             culpa qui officia deserunt mollit anim id est laborum.
           </div>
         </div>
-        <div class={themeColor === "light" ? "parallax img2" : "parallax img1"}>
+        <div class={themeColor === "dark" ? "parallax img2" : "parallax img1"}>
           <div class="par">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

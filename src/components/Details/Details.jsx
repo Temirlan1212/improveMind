@@ -7,7 +7,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getChapterAction } from "../actions/GetChapter";
 import { getOneCard } from "../actions/GetOneProduct";
 import Navbar from "../Navbar/Navbar";
+import BasicRating from "../Rating/Rating";
 import { addChapter } from "../slices/ChapterSlices/ChapterSlices";
+import { addSwitch } from "../slices/SwitchSlices/SwitchSlices";
 
 const Details = () => {
   const [chapter, setChapter] = useState("");
@@ -21,6 +23,7 @@ const Details = () => {
 
   useEffect(() => {
     dispatch(getOneCard(params.id));
+    dispatch(addSwitch());
   }, []);
 
   useEffect(() => {
@@ -61,6 +64,8 @@ const Details = () => {
       {card.text}
       <input onChange={(e) => setChapter(e.target.value)} value={chapter} />
       <button onClick={() => handleValues()}>add chapter</button>
+
+      <BasicRating />
     </div>
   );
 };

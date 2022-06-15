@@ -1,32 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addSwitch } from "../../slices/SwitchSlices/SwitchSlices";
 import "./Switch.css";
 
 const Switch = () => {
   const dispatch = useDispatch();
-  let color = localStorage.getItem("switch");
+  // let color = localStorage.getItem("switch");
+  const color = useSelector((state) => state.switch.switch);
+
+  useEffect(() => {
+    dispatch(addSwitch(color));
+  }, []);
   console.log(color);
 
   return (
     <div>
-      <div class="btn-container">
-        <label class="switch btn-color-mode-switch">
-          <input
-            type="checkbox"
-            name="color_mode"
-            id="color_mode"
-            value="1"
-            onClick={() => dispatch(addSwitch())}
-          />
-          <label
-            // for="color_mode"
-            data-on="Dark"
-            data-off="Light"
-            class="btn-color-mode-switch-inner"
-          ></label>
-        </label>
-      </div>
+      <input
+        className={color === "light" ? "switch" : "switch2"}
+        onClick={() => dispatch(addSwitch())}
+        type="checkbox"
+      />
     </div>
   );
 };

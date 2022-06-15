@@ -1,3 +1,4 @@
+import { alertClasses, alertTitleClasses } from "@mui/material";
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAuth,
@@ -25,7 +26,7 @@ let AuthSlice = createSlice({
       )
         .then((userCredential) => {
           let user = userCredential.user;
-          alert(user.email);
+          alertTitleClasses(user.email);
         })
         .catch((error) => {
           state.error = error.message;

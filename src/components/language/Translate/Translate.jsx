@@ -3,13 +3,15 @@ import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import en from "../locales/eng/translation.json";
 import ru from "../locales/ru/translation.json";
+import { useSelector } from "react-redux";
+import LanguageDetector from "i18next-browser-languagedetector";
+import HttpApi from "i18next-http-backend";
 
 i18n
-  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(initReactI18next)
+  .use(LanguageDetector)
+  .use(HttpApi)
   .init({
-    // the translations
-    // (tip move them in a JSON file and import them,
-    // or even better, manage them via a UI: https://react.i18next.com/guides/multiple-translation-files#manage-your-translations-with-a-management-gui)
     resources: {
       en: {
         translation: en,
@@ -18,8 +20,15 @@ i18n
         translation: ru,
       },
     },
-    lng: "ru", // if you're using a language detector, do not define the lng option
     fallbackLng: "en",
+    detection: {
+      order: ["cookie", "querystring", "localStorage", "path", "subdomain"],
+      caches: ["cookie"],
+    },
+    backend: {
+      loadPath: "../../language/locales/{{lng}}/translation.json",
+    },
+    react: { useSuspense: false },
 
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
@@ -27,6 +36,8 @@ i18n
   });
 
 const LangRender = () => {
+  const lang = useSelector((state) => state.switch.lang);
+  console.log(lang);
   //   const { t } = useTranslation();
   //   return <div>{t("Welcome to React")}</div>;
 };

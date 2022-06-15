@@ -2,8 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const SwitchSlices = createSlice({
   name: "switch",
+
   initialState: {
-    switch: [],
+    switch: "",
   },
 
   reducers: {
@@ -17,7 +18,6 @@ const SwitchSlices = createSlice({
       } else if (color === "dark") {
         localStorage.setItem("switch", "light");
       }
-
       state.switch = color;
     },
   },

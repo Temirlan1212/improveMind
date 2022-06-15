@@ -10,9 +10,13 @@ import "./Authentification.css";
 import AuthModal from "./AuthModal/AuthModal";
 import AuthWithGoogle from "./AuthWithGoogle";
 import AuthWithPhoneNumber from "./AuthWithPhoneNumber";
+import { Box } from "@mui/material";
+import Lang from "../Navbar/Lang/Lang";
+import { useTranslation } from "react-i18next";
 
 const Authentification = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [isLogIn, setIsLogIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,14 +45,14 @@ const Authentification = () => {
         URL.createObjectURL(file)
       );
 
-      // console.log("filesArray: ", filesArray);
-
       setFile((prevImages) => prevImages.concat(filesArray));
 
       Array.from(e.target.files).map(
         (file) => URL.revokeObjectURL(file) // avoid memory leak
       );
     }
+    setEmail("");
+    setPassword("");
   };
 
   useEffect(() => {
@@ -56,47 +60,28 @@ const Authentification = () => {
   }, []);
 
   const signUpInJsx = () => {
+    if (user.length !== 0) {
+      alert("you have already in account");
+      return;
+    }
     dispatch(
       signUp({
         email: email,
         password: password,
       })
     );
-
-    setEmail("");
-    setPassword("");
-    setIsCreateAcc(true);
+    if (email.trim() === "" && password.trim() === "") {
+      alert("pleas fill the all inputs");
+      return;
+    }
+    if (email.trim() !== "" && password.trim() !== "" && password.length > 4) {
+      return setTimeout(() => {
+        setIsCreateAcc(true);
+      }, 1000);
+    }
     // setTimeout(() => {
     //   navigate("/authmodal");
     // }, 2000);
-  };
-
-  const signInInJsx = () => {
-    dispatch(
-      signIn({
-        email: email,
-        password: password,
-      })
-    );
-
-    setEmail("");
-    setPassword("");
-  };
-
-  const signOut1 = () => {
-    let auth = fire.auth();
-    signOut(auth)
-      .then(() => {
-        console.log(auth);
-        if (auth === "no email") {
-          alert("sussecfully signed out");
-        } else {
-          alert("you already has signed out");
-        }
-      })
-      .catch((error) => {
-        alert(`doesn't signed out: ${error}`);
-      });
   };
 
   return (
@@ -105,54 +90,34 @@ const Authentification = () => {
         <section>
           <div class="register-wrapper">
             <div class="register-block">
-              <h3 class="register-title">Create an account</h3>
-              <p>Create an account using the form below.</p>
+              <h3 class="register-title">{t("signup")}</h3>
+
+              <p>{t("signUpUsingTheBelow")}</p>
               <div className="form">
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t("enterEmail")}
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                 />
                 <input
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder={t("enterPassword")}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 />
-                {isLogIn ? (
-                  <>
-                    <input
-                      type="submit"
-                      value="Sign In"
-                      onClick={() => signInInJsx()}
-                    />
-                    <p
-                      onClick={() => setIsLogIn(false)}
-                      style={{ cursor: "pointer", color: "black" }}
-                    >
-                      Don't have an account?
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="submit"
-                      value="Create an account"
-                      onClick={() => signUpInJsx()}
-                    />
-                    <p
-                      onClick={() => setIsLogIn(true)}
-                      style={{ cursor: "pointer", color: "black" }}
-                    >
-                      Already has an account?
-                    </p>
-                  </>
-                )}
+
+                <>
+                  <input
+                    type="submit"
+                    value="Create an account"
+                    onClick={() => signUpInJsx()}
+                  />
+                </>
               </div>
               {isCrateAcc ? (
                 <>
-                  you can upload your ava
+                  {t("uploadAva")}
                   <input type="file" onChange={(e) => handleImageChange(e)} />
                   <button onClick={() => addProfile()}>add photo</button>
                 </>
@@ -160,12 +125,35 @@ const Authentification = () => {
                 ""
               )}
 
-              <button onClick={() => signOut1()}>sign out</button>
+              <div className="line-before-additional-register" />
+
+              <div className="main-additional-register">
+                <div className="additional-register">
+                  <Box onClick={() => navigate("/authphone")}>
+                    {/* <PhoneAndroidIcon sx={{ fontSize: "50px" }} /> */}
+                    <img src="https://img.icons8.com/bubbles/50/undefined/phone--v1.png" />
+                  </Box>
+                  <Box>
+                    {/* <PhoneAndroidIcon sx={{ fontSize: "50px" }} /> */}
+                    <AuthWithGoogle />
+                  </Box>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "end",
+                    position: "absolute",
+                    bottom: "0",
+                    right: "20px",
+                  }}
+                >
+                  {t("changeLanguage")}: &nbsp; <Lang />
+                </div>
+              </div>
             </div>
           </div>
         </section>
-        <AuthWithGoogle />
-        <AuthWithPhoneNumber />
       </div>
     </div>
   );

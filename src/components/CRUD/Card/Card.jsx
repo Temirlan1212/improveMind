@@ -14,16 +14,18 @@ const Card = () => {
   useEffect(() => {
     dispatch(getCard());
   }, []);
-  console.log(cards[0].id);
 
   const deleteProductInList = (id) => {
     dispatch(deleteProduct(id));
     dispatch(getCard());
   };
 
+  let cards5 = cards.filter((elem, index) => index <= 4);
+
+  console.log(cards5);
   return (
     <div class="cards">
-      {cards.map((elem) => (
+      {cards5.map((elem) => (
         <div
           class="card one"
           style={{
@@ -32,8 +34,8 @@ const Card = () => {
         >
           <div class="details">
             <div class="content">
-              <h2>Blue</h2>
-              <p onClick={() => deleteProductInList(elem.id)}>delete</p>
+              <h2>{elem.text}</h2>
+
               <a
                 href="#"
                 class="button"
@@ -42,6 +44,7 @@ const Card = () => {
                 {" "}
                 read
               </a>
+              <p onClick={() => deleteProductInList(elem.id)}>delete</p>
             </div>
           </div>
         </div>

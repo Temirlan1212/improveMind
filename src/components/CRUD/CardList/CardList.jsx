@@ -9,6 +9,7 @@ import { deleteProduct } from "../../slices/CardSlices/CardSlices";
 import "../../../Background.css";
 import Navbar from "../../Navbar/Navbar";
 import Card from "../Card/Card";
+import { addSwitch } from "../../slices/SwitchSlices/SwitchSlices";
 
 const CardList = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const CardList = () => {
 
   useEffect(() => {
     dispatch(getCard());
+    dispatch(addSwitch());
   }, []);
 
   return cards.length !== 0 ? (
@@ -25,30 +27,17 @@ const CardList = () => {
         <div>
           <Navbar />
           <div
-            class={themeColor === "light" ? "parallax img2" : "parallax img1"}
+            class={themeColor === "dark" ? "parallax img2" : "parallax img1"}
           >
             <div class="par">
-              {/* {cards.map((elem) => (
-                <>
-                  <li
-                    onClick={() => navigate(`/list/${elem.id}`)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    {elem.text}
-                  </li>
-                  <button onClick={() => deleteProductInList(elem.id)}>
-                    delete
-                  </button>
-                </>
-              ))} */}
               <Card />
             </div>
           </div>
           <div>
             <div
-              class={themeColor === "light" ? "parallax img2" : "parallax img1"}
+              class={themeColor === "dark" ? "parallax img2" : "parallax img1"}
             >
-              <div class={themeColor === "light" ? "par2" : "par"}>
+              <div class={themeColor === "dark" ? "par2" : "par"}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
                 enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -60,7 +49,7 @@ const CardList = () => {
             </div>
           </div>
           <div
-            class={themeColor === "light" ? "parallax img2" : "parallax img1"}
+            class={themeColor === "dark" ? "parallax img2" : "parallax img1"}
           >
             <div class="par par3">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -73,7 +62,7 @@ const CardList = () => {
             </div>
           </div>
           <div
-            class={themeColor === "light" ? "parallax img2" : "parallax img1"}
+            class={themeColor === "dark" ? "parallax img2" : "parallax img1"}
           >
             <div class="par">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

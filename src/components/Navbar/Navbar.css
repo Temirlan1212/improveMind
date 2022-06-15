@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
   position: absolute;
   top: 0;
   z-index: 100;
@@ -85,4 +85,27 @@
   .switch-nav {
     display: none;
   }
+} */
+
+body,
+html {
+  font-family: "'PT Sans Narrow', sans-serif";
+}
+
+.menu-nav-open {
+  width: 160px;
+  position: absolute;
+  z-index: 1;
+  top: 55px;
+  right: 70px;
+  background-color: white;
+  height: 200px;
+}
+.menu-nav-open-text {
+  background-color: white;
+}
+
+.menu-nav-open-text:hover {
+  color: white;
+  background-color: #d9534f;
 }

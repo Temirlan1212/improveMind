@@ -31,7 +31,10 @@ const AuthWithGoogle = () => {
 
   return (
     <div>
-      <button onClick={() => signInGoogle()}>google sign in</button>
+      <div onClick={() => signInGoogle()}>
+        {" "}
+        <img src="https://img.icons8.com/officel/30/undefined/google-logo.png" />
+      </div>
     </div>
   );
 };
