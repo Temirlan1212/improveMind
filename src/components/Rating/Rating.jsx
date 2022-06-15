@@ -11,67 +11,52 @@ import { getCard } from "../actions/GetCards";
 import { getOneCard } from "../actions/GetOneProduct";
 import { createNextState } from "@reduxjs/toolkit";
 import firebase from "firebase/compat/app";
+import { addRating } from "../slices/RatingSlice/RatingSlice";
+import { getOneRatingAsync } from "../actions/GetOneRating";
 
 export default function BasicRating({ item }) {
   const firestore = fire.firestore();
-  const [value, setValue] = useState(2);
-  const [valueFromFire, setValueFromFire] = useState(0);
-  const { id } = useParams();
   const dispatch = useDispatch();
-
-  const card = useSelector((state) => state.card.cards);
-  useEffect(() => {
-    dispatch(getOneCard(id));
-    fetchData();
-  }, []);
+  const { id } = useParams();
+  const { user } = useParams();
 
   const { user: currentUser } = useSelector((state) => state.auth.email);
-  console.log(card);
-  console.log(currentUser);
+  const ratingOne = useSelector((state) => state.rating.rating);
+  const { mark } = useSelector((state) => state.rating.rating);
 
-  const fetchData = async () => {
-    const doc = await firestore.collection("messages").doc(id).get();
+  const idCreated = id + user;
 
-    const product = {
-      id: doc.id,
-      ...doc.data(),
-    };
+  console.log(idCreated);
 
-    let oneMark = product.rating.filter((elem) => elem.email === currentUser);
-    console.log(oneMark);
-    setValueFromFire(oneMark[0].mark);
-  };
+  useEffect(() => {
+    dispatch(getOneRatingAsync(id + user));
+  }, []);
+
+  console.log(ratingOne);
 
   const updateRatings = async (id, update) => {
-    await firestore.collection("messages").doc(id).update({ rating: update });
-    fetchData();
+    await firestore.collection("ratings").doc(id).update({ mark: update });
+    dispatch(getOneRatingAsync(id));
   };
 
   const putRating = (id, newValue) => {
     let user = {
       email: currentUser,
       mark: newValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
-    let checkUser = card?.rating.some((item) => item?.email === currentUser);
+    let checkUser = ratingOne.email === currentUser;
     console.log(checkUser);
 
     if (checkUser) {
-      //   let filteredRating = card.rating.filter((elem) => {
-      //     return elem.email !== currentUser;
-      //   });
-      //   console.log(filteredRating);
-      // updateRatings(id, user);
+      updateRatings(idCreated, newValue);
     } else {
-      let ratings = [...card.rating, user];
-      console.log(ratings);
-      updateRatings(id, ratings);
+      dispatch(addRating({ user, id, currentUser }));
     }
 
-    dispatch(getOneCard(id));
+    dispatch(getOneRatingAsync(idCreated));
   };
-
-  console.log(valueFromFire);
 
   return (
     <Box
@@ -82,12 +67,12 @@ export default function BasicRating({ item }) {
       <Typography component="legend">Controlled</Typography>
       <Rating
         name="simple-controlled"
-        value={valueFromFire}
+        value={mark === undefined ? 0 : mark}
         onChange={(event, newValue) => {
           putRating(id, newValue);
         }}
       />
-      <button onClick={() => fetchData3(id, value)}>click</button>
+      <button>click</button>
     </Box>
   );
 }

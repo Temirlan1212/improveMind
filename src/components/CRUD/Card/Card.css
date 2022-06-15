@@ -86,3 +86,10 @@ h1 {
 .content a:hover {
   background-position: right;
 }
+.ratingCard {
+  position: absolute;
+  font-size: 30px;
+  top: 0;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8);
+}

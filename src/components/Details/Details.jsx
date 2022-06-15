@@ -49,7 +49,9 @@ const Details = () => {
           {elem.id === params.id ? (
             <li
               onClick={() =>
-                navigate(`/list/${params.id}/${elem.id}/${elem.chapter}`)
+                navigate(
+                  `/${params.id}/${params.user}/${elem.id}/${elem.chapter}`
+                )
               }
               style={{ cursor: "pointer" }}
             >

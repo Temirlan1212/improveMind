@@ -23,12 +23,12 @@ const MainRoutes = () => {
       id: 2,
     },
     {
-      path: "/list/:id",
+      path: "/:id/:user",
       element: <Details />,
       id: 3,
     },
     {
-      path: "/list/:id/:id2/:index",
+      path: "/:id/:user/:id2/:index",
       element: <OneChapterList />,
       id: 4,
     },
