@@ -25,7 +25,6 @@ function App() {
   };
 
   let currentLanguage = localStorage.getItem("i18nextLng");
-  console.log(document.body.lang);
 
   const { t } = useTranslation();
 

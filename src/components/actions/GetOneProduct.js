@@ -13,7 +13,7 @@ export const getOneCard = createAsyncThunk(
     let list = [];
     const firestore = fire.firestore();
     const snapshot = await firestore.collection("messages").doc(id).get();
-    console.log(snapshot);
+
     if (snapshot.empty) {
       console.log("No matching documents.");
       return;

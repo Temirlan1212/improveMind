@@ -35,7 +35,6 @@ const Authentification = () => {
       photoURL: file[0],
     });
   };
-  console.log(file);
 
   const handleImageChange = (e) => {
     // console.log(e.target.files[])

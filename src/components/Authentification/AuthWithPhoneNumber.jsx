@@ -22,7 +22,6 @@ const AuthWithPhoneNumber = () => {
 
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log();
 
   // function setUpRecatcha(number1) {
   //   console.log(number1);
@@ -78,8 +77,6 @@ const AuthWithPhoneNumber = () => {
   function handleOnChange(value) {
     setCountryNumber(value);
   }
-
-  console.log(countryNumber);
 
   const signOutWithButton = () => {
     signOut(auth)

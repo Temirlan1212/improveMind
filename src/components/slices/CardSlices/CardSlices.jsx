@@ -35,6 +35,21 @@ let CardSlices = createSlice({
       console.log("this is one product");
       state.cards = action.payload;
     },
+    updateProduct(state, action) {
+      const firestore = fire.firestore();
+      async function updateProduct2() {
+        await firestore
+          .collection("messages")
+          .doc(action.payload.id)
+          .update(action.payload.updates)
+          .then(() => console.log("updated successfuly"))
+          .catch((err) => {
+            console.log("err", "=>", err);
+          });
+      }
+      updateProduct2();
+    },
+
     deleteProduct(state, action) {
       const firestore = fire.firestore();
       console.log("this is delete product");
@@ -49,6 +64,11 @@ let CardSlices = createSlice({
   },
 });
 
-export const { addCard, getPoducts, getOneProduct, deleteProduct } =
-  CardSlices.actions;
+export const {
+  addCard,
+  getPoducts,
+  getOneProduct,
+  deleteProduct,
+  updateProduct,
+} = CardSlices.actions;
 export default CardSlices.reducer;

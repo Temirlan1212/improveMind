@@ -9,6 +9,7 @@ const RatingSlice = createSlice({
   initialState: {
     rating: {},
     ratings: [],
+    filtered: [],
   },
 
   reducers: {
@@ -17,14 +18,13 @@ const RatingSlice = createSlice({
       console.log(action.payload);
       const addRating2 = async () => {
         try {
-          await setDoc(
-            doc(
-              firestore,
-              "ratings",
-              `${action.payload.id}${action.payload.currentUser}`
-            ),
-            action.payload.user
-          );
+          await addDoc(collection(firestore, "ratings"), {
+            customId: action.payload.customId,
+            email: action.payload.email,
+            mark: action.payload.mark,
+            id: action.payload.id,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          });
           console.log("successfully added");
         } catch (error) {
           console.log(error);
@@ -34,14 +34,18 @@ const RatingSlice = createSlice({
     },
 
     getOneRating(state, action) {
-      state.rating = action.payload;
-      console.log(action.payload);
+      state.rating = action.payload[0];
+      console.log("this is get one Rating", action.payload);
     },
     getRatings(state, action) {
       state.ratings = action.payload;
     },
+    getFilteredRatingById(state, action) {
+      state.filtered = action.payload;
+    },
   },
 });
 
-export const { addRating, getOneRating, getRatings } = RatingSlice.actions;
+export const { addRating, getOneRating, getRatings, getFilteredRatingById } =
+  RatingSlice.actions;
 export default RatingSlice.reducer;

@@ -20,24 +20,16 @@ const Card = () => {
     dispatch(getRatingsAction());
   }, []);
 
-  let totalMark = 0;
-  let averageMark = 0;
-  const countTotalMark = () => {
-    marks.forEach((item) => {
-      totalMark += +item.mark;
-    });
-    averageMark = totalMark / marks.length;
-  };
-  countTotalMark();
-
   const deleteProductInList = (id) => {
     dispatch(deleteProduct(id));
     dispatch(getCard());
   };
 
   let cards5 = cards.filter((elem, index) => index <= 4);
+  if (cards5.length === 0) {
+    return <>loading</>;
+  }
 
-  console.log(cards5);
   return (
     <div class="cards">
       {cards5.map((elem) => (
@@ -49,7 +41,7 @@ const Card = () => {
         >
           <div className="ratingCard">
             <StarPurple500SharpIcon sx={{ color: "yellow" }} /> &nbsp;
-            {averageMark}
+            {elem.averageMark}
           </div>
           <div class="details">
             <div class="content">

@@ -13,7 +13,6 @@ const Lang = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const toggleL = useSelector((state) => state.menuToggle.langToggle);
-  console.log(toggleL);
 
   // const lang = localStorage.getItem("i18nextLng");
 

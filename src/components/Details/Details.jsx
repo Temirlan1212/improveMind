@@ -30,16 +30,12 @@ const Details = () => {
     dispatch(getChapterAction());
   }, []);
 
-  console.log(chapterFromStore);
-
   const handleValues = () => {
     dispatch(addChapter({ chapter, id: params.id }));
 
     dispatch(getChapterAction());
     setChapter("");
   };
-
-  console.log(card);
 
   return (
     <div>

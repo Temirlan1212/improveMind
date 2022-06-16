@@ -95,8 +95,6 @@ export default function Navbar() {
       dispatch(menuToggleMiddle(true));
     }
   };
-  console.log(menuToggle);
-  console.log(cards);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -105,8 +103,6 @@ export default function Navbar() {
     dispatch(GetAuthEmail());
     dispatch(getCard());
   }, []);
-
-  console.log(user);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

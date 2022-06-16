@@ -1,15 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import fire from "../../fire";
-import { getOneRating } from "../slices/RatingSlice/RatingSlice";
+import {
+  getFilteredRatingById,
+  getOneRating,
+} from "../slices/RatingSlice/RatingSlice";
 
-export const getOneRatingAction = createAsyncThunk(
-  "get/OneRating",
+export const getFilteredRatingByIdAction = createAsyncThunk(
+  "get/FilteredRating",
 
   async (id, { __, dispatch }) => {
     const firestore = fire.firestore();
 
     const citiesRef = firestore.collection("ratings");
-    const snapshot = await citiesRef.where("customId", "==", id).get();
+    const snapshot = await citiesRef.where("id", "==", id).get();
     console.log(snapshot);
 
     if (snapshot.empty) {
@@ -23,6 +26,6 @@ export const getOneRatingAction = createAsyncThunk(
       list.push(doc.data());
     });
 
-    dispatch(getOneRating(list));
+    dispatch(getFilteredRatingById(list));
   }
 );
