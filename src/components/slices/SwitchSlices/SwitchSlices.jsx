@@ -12,7 +12,6 @@ const SwitchSlices = createSlice({
       console.log("this is switch");
 
       let color = localStorage.getItem("switch");
-
       if (color === "light") {
         localStorage.setItem("switch", "dark");
       } else if (color === "dark") {

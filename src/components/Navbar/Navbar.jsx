@@ -27,6 +27,11 @@ import Avatar from "@mui/material/Avatar";
 import { getCard } from "../actions/GetCards";
 import "./Navbar.css";
 import { menuToggleMiddle } from "../slices/MenuToggleSlice/MenuToggleSlice";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
+import logo from "../images/log.png";
 
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import PersonIcon from "@mui/icons-material/Person";
@@ -36,6 +41,7 @@ import { useTranslation } from "react-i18next";
 import Lang from "./Lang/Lang";
 import Drawer from "../Drawer/Drawer";
 import TemporaryDrawer from "../Drawer/Drawer";
+import { addSwitch } from "../slices/SwitchSlices/SwitchSlices";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -102,6 +108,7 @@ export default function Navbar() {
   React.useEffect(() => {
     dispatch(GetAuthEmail());
     dispatch(getCard());
+    dispatch(addSwitch());
   }, []);
 
   const isMenuOpen = Boolean(anchorEl);
@@ -127,11 +134,9 @@ export default function Navbar() {
     let auth = fire.auth();
     signOut(auth)
       .then(() => {
-        console.log(auth);
+        document.location.reload(false);
         if (auth === "no email") {
           alert("sussecfully signed out");
-        } else {
-          alert("you already has signed out");
         }
       })
       .catch((error) => {
@@ -139,9 +144,6 @@ export default function Navbar() {
       });
   };
   const menuId = "primary-search-account-menu";
-  // const renderMenu = (
-
-  // );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -242,8 +244,13 @@ export default function Navbar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={() => navigate("/")}
           >
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+            <img
+              className="logo-svg-navbar"
+              src="https://uxwing.com/wp-content/themes/uxwing/download/32-video-photography-multimedia/live.png"
+            />
           </IconButton>
 
           <Box
@@ -285,7 +292,12 @@ export default function Navbar() {
           </Search>
 
           <TemporaryDrawer />
-          <Box sx={{ flexGrow: 1 }} />
+          <Box
+            sx={{
+              flexGrow: 1,
+              marginLeft: { xs: "-30px" },
+            }}
+          />
           <Box sx={{ display: { xs: "flex", md: "flex" } }}>
             <IconButton
               aria-label="show 4 new mails"
@@ -372,37 +384,52 @@ export default function Navbar() {
                   </div>
                   {t("signUp")}
                 </Box>
+                <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="false"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </Box>
               </Box>
             )}
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="false"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
           </Box>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
 
-      <div
-        className="menu-nav-open"
-        style={{ display: menuToggle ? "block" : "none" }}
-      >
-        <div className="menu-nav-open-text" onClick={() => signOut1()}>
-          sign out
-        </div>
-        <div
-          className="menu-nav-open-text"
-          onClick={(handleMenuClose, () => navigate("/add"))}
-        >
-          adming page
+      <div style={{ display: menuToggle ? "block" : "none" }}>
+        <div className="menu-nav-open">
+          <div className="menu-nav-open-line" />
+          <div
+            className="menu-nav-open-text"
+            onClick={() => {
+              signOut1();
+              navigate("/");
+            }}
+          >
+            <LogoutIcon />
+            &nbsp; sign out
+          </div>
+          <div
+            className="menu-nav-open-text"
+            onClick={(handleMenuClose, () => navigate("/add"))}
+          >
+            <AdminPanelSettingsIcon />
+            &nbsp; admin
+          </div>
+          <div
+            className="menu-nav-open-text"
+            onClick={() => navigate(`update/${user.user}`)}
+          >
+            <AccountCircleIcon />
+            &nbsp; new ava
+          </div>
         </div>
       </div>
     </Box>

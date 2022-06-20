@@ -1,0 +1,217 @@
+/* Setting up the Parallax Standard for the webpage */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #d9534f;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #d9534f;
+}
+
+.second-main-div__home {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.right-block-home {
+  width: 70%;
+  height: 173vh;
+}
+.right-block-home-firstBlock {
+  width: 100%;
+  height: 50vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.right-block-home-secondBlock {
+  width: 100%;
+  margin-top: 100px;
+  height: 107vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 1200px) {
+  .right-block-home {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .par-home {
+    overflow-x: overlay;
+    width: 100%;
+  }
+}
+
+.home-section1-container {
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 100px;
+  align-items: flex-start;
+  height: 200vh;
+  justify-content: space-between;
+  /* border: 1px solid blue; */
+  margin-top: 170px;
+}
+
+@media screen and (max-width: 1000px) {
+  .home-section1-container {
+    display: contents;
+  }
+  .left-block-home {
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+}
+
+.left-block-home {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  /* border: 1px solid yellow; */
+  max-width: 78%;
+}
+
+.parallax-home {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  height: 186vh;
+}
+
+.parallax-home-color {
+  background-color: rgba(0, 0, 0, 0.2);
+  height: 120vh;
+  position: absolute;
+  z-index: 99;
+}
+
+.img-home-1 {
+  background-image: url("https://doramalive.ru/local/lib/theme2/default/fon.jpg");
+  background-position: center;
+  height: 250vh;
+}
+
+.img-home-2 {
+  background-image: url("../images/fonnight.jpg");
+  background-position: center;
+  background-size: cover;
+  height: 250vh;
+}
+
+.img-home-3 {
+  background-image: url("https://images.pexels.com/photos/772520/pexels-photo-772520.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+  height: 250vh;
+}
+
+/* Editing the Divs */
+.par-home {
+  /* border: 1px solid black; */
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+  margin-bottom: 70px;
+
+  /* flex-direction: column; */
+  /* flex-wrap: wrap; */
+}
+
+.par-home-2 {
+  margin-top: 100px;
+  position: relative;
+  width: 90%;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+}
+
+.par-home-3 {
+  color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .parallax-home {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.par-main-text-home {
+  font-weight: 200;
+  color: white;
+  font-family: "PT Sans Narrow, sans-serif";
+  letter-spacing: 0px;
+  text-align: start;
+  font-size: calc(20px + 10 * (100vw / 1200));
+  max-width: 91%;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 14px;
+  margin-top: -70px;
+}
+.par-text-home {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "PT Sans Narrow, sans-serif";
+  letter-spacing: 0px;
+  text-align: start;
+  font-size: calc(14px + 5 * (100vw / 1200));
+  max-width: 91%;
+  width: 100%;
+  margin-top: 20px;
+  line-height: 25px;
+  margin-bottom: -30px;
+}
+.par-text-filter {
+  font-weight: 200;
+  color: white;
+  font-family: "PT Sans Narrow, sans-serif";
+  letter-spacing: 0px;
+  text-align: start;
+  font-size: calc(17px + 7 * (100vw / 1200));
+  max-width: 91%;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  .par-text-home {
+    font-size: calc(14px + (5 + 5 * 0.7) * ((100vw - 320px) / 1200));
+  }
+  .par-main-text-home {
+    font-size: calc(20px + (20 + 10 * 0.7) * ((100vw - 320px) / 1200));
+  }
+  .par-text-filter {
+    font-size: calc(17px + (17 + 7 * 0.7) * ((100vw - 320px) / 1200));
+  }
+}
+
+.par-main-text-home_box {
+  width: 101%;
+  display: flex;
+  flex-direction: column;
+}
+
+.overflow-xScroll {
+  max-width: 840px;
+  overflow-x: scroll;
+}

@@ -14,6 +14,7 @@ let AuthSlice = createSlice({
   initialState: {
     email: [],
     error: [],
+    stateAdd: false,
   },
   reducers: {
     signUp(state, action) {
@@ -26,10 +27,12 @@ let AuthSlice = createSlice({
       )
         .then((userCredential) => {
           let user = userCredential.user;
-          alertTitleClasses(user.email);
+          alert(user.email);
+          action.payload.setIsCreateAcc(true);
         })
         .catch((error) => {
-          state.error = error.message;
+          // state.error = error.message;
+          console.log(error.message);
         });
     },
     signIn(state, action) {

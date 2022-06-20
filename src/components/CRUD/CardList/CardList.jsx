@@ -10,6 +10,7 @@ import "../../../Background.css";
 import Navbar from "../../Navbar/Navbar";
 import Card from "../Card/Card";
 import { addSwitch } from "../../slices/SwitchSlices/SwitchSlices";
+import { getRatingsAction } from "../../actions/GetRatings";
 
 const CardList = () => {
   const dispatch = useDispatch();
@@ -18,10 +19,13 @@ const CardList = () => {
 
   useEffect(() => {
     dispatch(getCard());
-    dispatch(addSwitch());
   }, []);
 
-  return cards.length !== 0 ? (
+  // if (cards.length === 0) {
+  //   return <>loading</>;
+  // }
+
+  return (
     <div>
       <div>
         <div>
@@ -29,9 +33,7 @@ const CardList = () => {
           <div
             class={themeColor === "dark" ? "parallax img2" : "parallax img1"}
           >
-            <div class="par">
-              <Card />
-            </div>
+            <div class="par"></div>
           </div>
           <div>
             <div
@@ -77,8 +79,6 @@ const CardList = () => {
         </div>
       </div>
     </div>
-  ) : (
-    "you have no internet.. or you we have a problem with server"
   );
 };
 

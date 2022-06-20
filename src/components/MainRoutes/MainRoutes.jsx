@@ -1,5 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import AuthAvaAdd from "../Authentification/AuthAvaAdd/AuthAvaAdd";
+import AuthUpdateAva from "../Authentification/AuthAvaAdd/AuthUpdateAva";
 import Authentification from "../Authentification/Authentification";
 import AuthModal from "../Authentification/AuthModal/AuthModal";
 import AuthWithPhoneNumber from "../Authentification/AuthWithPhoneNumber";
@@ -52,6 +54,16 @@ const MainRoutes = () => {
       path: "/signin",
       element: <SignIn />,
       id: 8,
+    },
+    {
+      path: "/register/:user",
+      element: <AuthAvaAdd />,
+      id: 9,
+    },
+    {
+      path: "/update/:user",
+      element: <AuthUpdateAva />,
+      id: 10,
     },
   ];
   const PRIVATE_ROUTES = [

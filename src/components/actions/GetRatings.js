@@ -1,24 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { collection, getDocs } from "firebase/firestore";
 import fire from "../../fire";
-import { getRatings } from "../slices/RatingSlice/RatingSlice";
+import {
+  getRatings,
+  getRatingSubCollection,
+} from "../slices/RatingSlice/RatingSlice";
 
-export const getRatingsAction = createAsyncThunk(
+export const getRatingSubCollectionAction = createAsyncThunk(
   "get/ratings",
 
-  async (_, { __, dispatch }) => {
+  async (id, { __, dispatch }) => {
     const firestore = fire.firestore();
+    const querySnapshot = await firestore
+      .collection(`messages/${id}/ratings`)
+      .get();
+
     let list = [];
+    querySnapshot.forEach((queryDocumentSnapshot) => {
+      list.push(queryDocumentSnapshot.data());
+    });
+    console.log(list);
 
-    try {
-      const querySnapshot = await getDocs(collection(firestore, "ratings"));
-
-      querySnapshot.forEach((doc) => {
-        list.push({ id: doc.id, ...doc.data() });
-      });
-      dispatch(getRatings(list));
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(getRatingSubCollection(list));
   }
 );

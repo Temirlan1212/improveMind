@@ -6,10 +6,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .parallax-color {
@@ -39,11 +37,13 @@
 .par {
   border: 1px solid black;
   position: relative;
-  width: 90%;
+  width: 60%;
   font-size: calc(15px + 20 * (100vw / 1200));
   text-align: center;
   vertical-align: middle;
   margin-top: 100px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 767px) {

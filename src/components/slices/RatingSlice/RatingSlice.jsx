@@ -13,31 +13,50 @@ const RatingSlice = createSlice({
   },
 
   reducers: {
-    addRating(state, action) {
+    addSubCollectionRating(state, action) {
       const firestore = fire.firestore();
       console.log(action.payload);
-      const addRating2 = async () => {
-        try {
-          await addDoc(collection(firestore, "ratings"), {
-            customId: action.payload.customId,
-            email: action.payload.email,
-            mark: action.payload.mark,
-            id: action.payload.id,
+      const addSubCollection2 = async () => {
+        // firestore
+        //   .collection("messages")
+        //   .doc(id)
+        //   .collection("ratings")
+        //   .add({
+        //     email: currentUser,
+        //     mark: 3,
+        //   })
+        //   .then(function () {
+        //     console.log("Document Added ");
+        //   })
+        //   .catch(function (error) {
+        //     console.error("Error adding document: ", error);
+        //   });
+
+        firestore
+          .collection("messages")
+          .doc(action.payload.id)
+          .collection("ratings")
+          .doc(action.payload.currentUser)
+          .set({
+            email: action.payload.currentUser,
+            mark: action.payload.newValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            console.log("subcollection updated successfully");
+          })
+          .catch((err) => {
+            console.log("err", "=>", err);
           });
-          console.log("successfully added");
-        } catch (error) {
-          console.log(error);
-        }
       };
-      addRating2();
+      addSubCollection2();
     },
 
-    getOneRating(state, action) {
+    getOneRatingSubCollection(state, action) {
       state.rating = action.payload[0];
       console.log("this is get one Rating", action.payload);
     },
-    getRatings(state, action) {
+    getRatingSubCollection(state, action) {
       state.ratings = action.payload;
     },
     getFilteredRatingById(state, action) {
@@ -46,6 +65,10 @@ const RatingSlice = createSlice({
   },
 });
 
-export const { addRating, getOneRating, getRatings, getFilteredRatingById } =
-  RatingSlice.actions;
+export const {
+  addSubCollectionRating,
+  getOneRatingSubCollection,
+  getRatingSubCollection,
+  getFilteredRatingById,
+} = RatingSlice.actions;
 export default RatingSlice.reducer;

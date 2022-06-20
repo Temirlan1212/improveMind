@@ -10,7 +10,7 @@ h1 {
   flex-wrap: nowrap;
   justify-content: center;
   justify-content: space-between;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   max-width: 68%;
 }
 
@@ -23,6 +23,13 @@ h1 {
   width: 10rem;
   margin: 4px;
   box-shadow: 0 0 2px #ffffff80;
+}
+
+@media screen and (max-width: 500px) {
+  .card {
+    width: 7rem;
+    height: 190px;
+  }
 }
 
 .details {
@@ -50,7 +57,7 @@ h1 {
 
 .content h2 {
   color: #f1ececdd;
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: 400;
@@ -87,9 +94,49 @@ h1 {
   background-position: right;
 }
 .ratingCard {
+  display: flex;
   position: absolute;
-  font-size: 30px;
-  top: 0;
+  font-size: 17px;
+  align-items: center;
+  border-radius: 5px;
+  top: 10px;
   color: white;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(19, 115, 19, 0.8);
+  width: 45px;
+  padding: 1px;
+  margin-left: 5px;
+}
+
+.ratingCard2 {
+  display: flex;
+  position: absolute;
+  font-size: 17px;
+  align-items: center;
+  border-radius: 5px;
+  top: 10px;
+  color: white;
+  background-color: rgba(166, 132, 0, 0.8);
+  width: 45px;
+  padding: 1px;
+  margin-left: 5px;
+}
+.ratingCard3 {
+  display: flex;
+  position: absolute;
+  font-size: 17px;
+  align-items: center;
+  border-radius: 5px;
+  top: 10px;
+  color: white;
+  background-color: rgba(100, 100, 100, 0.8);
+  width: 45px;
+  padding: 1px;
+  margin-left: 5px;
+}
+
+.ratingCardQVotes {
+  font-size: 17px;
+  display: flex;
+  align-items: flex-end;
+  margin-right: 4px;
 }

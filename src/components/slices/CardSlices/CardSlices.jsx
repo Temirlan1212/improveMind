@@ -8,6 +8,8 @@ let CardSlices = createSlice({
   name: "card",
   initialState: {
     cards: [],
+    byAverageMark: [],
+    byYear: [],
   },
 
   reducers: {
@@ -19,6 +21,7 @@ let CardSlices = createSlice({
             text: action.payload.text,
             description: action.payload.description,
             img: action.payload.img,
+            year: +action.payload.year,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           });
         } catch (error) {
@@ -31,11 +34,18 @@ let CardSlices = createSlice({
       console.log("this is getProducts");
       state.cards = action.payload;
     },
+    getByAverageMark(state, action) {
+      state.byAverageMark = action.payload;
+    },
+    getByYear(state, action) {
+      state.byYear = action.payload;
+    },
     getOneProduct(state, action) {
       console.log("this is one product");
       state.cards = action.payload;
     },
     updateProduct(state, action) {
+      console.log(action.payload);
       const firestore = fire.firestore();
       async function updateProduct2() {
         await firestore
@@ -49,7 +59,6 @@ let CardSlices = createSlice({
       }
       updateProduct2();
     },
-
     deleteProduct(state, action) {
       const firestore = fire.firestore();
       console.log("this is delete product");
@@ -70,5 +79,7 @@ export const {
   getOneProduct,
   deleteProduct,
   updateProduct,
+  getByYear,
+  getByAverageMark,
 } = CardSlices.actions;
 export default CardSlices.reducer;

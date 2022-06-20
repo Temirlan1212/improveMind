@@ -1,0 +1,18 @@
+.footer-section-1 {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 20vh;
+}
+
+.container-footer {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+.right-block-footer {
+  display: flex;
+}
+
+.right-block-footer-child {
+  display: flex;
+}
