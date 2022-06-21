@@ -181,7 +181,7 @@ export default function Navbar() {
             },
             display: "flex",
             mr: "20px",
-            fontFamily: "'PT Sans Narrow', sans-serif",
+            fontFamily: "PT Sans Narrow",
             color: "black",
           }}
           onClick={() => navigate("/signin")}
@@ -207,7 +207,7 @@ export default function Navbar() {
               color: "#d9534f",
             },
             color: "black",
-            fontFamily: "'PT Sans Narrow', sans-serif",
+            fontFamily: "PT Sans Narrow",
           }}
           onClick={() => navigate("/register")}
         >
@@ -281,15 +281,16 @@ export default function Navbar() {
             </IconButton>
           </Box>
 
-          <Search sx={{ display: { xs: "none", md: "flex" } }}>
+          {/* <Search sx={{ display: { xs: "none", md: "flex" } }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder={t("search")}
               inputProps={{ "aria-label": "search" }}
+              onChange={(e) => console.log(e.target.value)}
             />
-          </Search>
+          </Search> */}
 
           <TemporaryDrawer />
           <Box
@@ -348,7 +349,7 @@ export default function Navbar() {
                     },
                     display: "flex",
                     mr: "20px",
-                    fontFamily: "'PT Sans Narrow', sans-serif",
+                    fontFamily: "PT Sans Narrow",
                   }}
                   onClick={() => navigate("/signin")}
                 >
@@ -372,7 +373,7 @@ export default function Navbar() {
                     "&:hover": {
                       color: "#d9534f",
                     },
-                    fontFamily: "'PT Sans Narrow', sans-serif",
+                    fontFamily: "PT Sans Narrow",
                   }}
                   onClick={() => navigate("/register")}
                 >

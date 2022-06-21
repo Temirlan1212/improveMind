@@ -1,4 +1,7 @@
 import React from "react";
+import "./Footer.css";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import InstagramIcon from "@mui/icons-material/Instagram";
 
 const Footer = () => {
   return (
@@ -16,11 +19,26 @@ const Footer = () => {
           <div className="right-block-footer-child">
             Manga live - любимые и популярные манги
           </div>
-          <div className="right-block-footer-child">Telegram ВКонтакте</div>
-          <div className="right-block-footer-child"></div>
+          <div className="right-block-footer-child">
+            <div className="right-block-footer-child-text">
+              <TelegramIcon /> &nbsp; Telegram
+            </div>{" "}
+            <div className="right-block-footer-child-text">
+              <InstagramIcon />
+              &nbsp; Instagram
+            </div>
+          </div>
+          <div className="right-block-footer-child">
+            <img
+              src="https://doramalive.ru/images/app.png"
+              style={{ width: "260px" }}
+            />
+          </div>
         </div>
 
-        <div className="left-block-footer"></div>
+        <div className="left-block-footer">
+          <span className="left-block-footer-text">18+</span>
+        </div>
       </div>
     </div>
   );

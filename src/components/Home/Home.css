@@ -27,7 +27,7 @@
 }
 
 .right-block-home {
-  width: 70%;
+  width: 60%;
   height: 173vh;
 }
 .right-block-home-firstBlock {
@@ -156,10 +156,8 @@
 }
 
 .par-main-text-home {
-  font-weight: 200;
   color: white;
-  font-family: "PT Sans Narrow, sans-serif";
-  letter-spacing: 0px;
+  font-family: "PT Sans Narrow";
   text-align: start;
   font-size: calc(20px + 10 * (100vw / 1200));
   max-width: 91%;
@@ -170,21 +168,18 @@
 }
 .par-text-home {
   color: rgba(255, 255, 255, 0.8);
-  font-family: "PT Sans Narrow, sans-serif";
-  letter-spacing: 0px;
+  font-family: "PT Sans Narrow";
   text-align: start;
   font-size: calc(14px + 5 * (100vw / 1200));
   max-width: 91%;
   width: 100%;
   margin-top: 20px;
-  line-height: 25px;
   margin-bottom: -30px;
 }
 .par-text-filter {
   font-weight: 200;
   color: white;
-  font-family: "PT Sans Narrow, sans-serif";
-  letter-spacing: 0px;
+  font-family: "PT Sans Narrow";
   text-align: start;
   font-size: calc(17px + 7 * (100vw / 1200));
   max-width: 91%;

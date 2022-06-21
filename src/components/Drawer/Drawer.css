@@ -1,0 +1,71 @@
+.main-section-drawer1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.main-section-drawer2 {
+  background-image: url("https://doramalive.ru/local/lib/theme2/default/fon.jpg");
+  position: relative;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* /////////////searc//////////////////////// */
+.main-search_input-Drawer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+}
+
+.search_input-Drawer {
+  max-width: 1000px;
+  width: 100%;
+  height: 50px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: none;
+  padding-left: 100px;
+  box-sizing: border-box;
+}
+.search_input-Drawer:focus {
+  outline: none;
+}
+.search_icon-Drawer {
+  color: white;
+}
+
+.search_icon_box-Drawer {
+  background-color: #d9534f;
+  height: 100%;
+  height: 50px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+/* ////////////////CARDS////////////////////////// */
+
+.card_text-drawer {
+  color: rgb(216, 215, 215);
+}
+.card_img-drawer {
+  width: 100px;
+}
+
+.card_main-drawer {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  max-width: 1040px;
+  margin: 0 auto !important;
+  width: 100%;
+}
+
+.card_main-drawer:hover {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}

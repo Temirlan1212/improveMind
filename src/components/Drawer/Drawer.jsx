@@ -11,56 +11,20 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { styled } from "@mui/system";
-import { InputBase } from "@mui/material";
+import { InputBase, Typography } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { useEffect } from "react";
+import fire from "../../fire";
+import "./Drawer.css";
+import Navbar from "../Navbar/Navbar";
 
 export default function TemporaryDrawer() {
+  const firestore = fire.firestore();
   const { t } = useTranslation();
-
-  const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: "rgba(255, 255, 255, 10)",
-    "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.8)",
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    height: "36px",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-    marginTop: "20px",
-  }));
-
-  const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 1, 0, 1),
-    borderRadius: "3px",
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#d9534f",
-  }));
-
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "black",
-
-    "& .MuiInputBase-input": {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "20ch",
-      },
-    },
-  }));
+  const [searchProduct, setSearchProduct] = useState("");
+  const [products, setProducts] = useState([]);
 
   const [state, setState] = React.useState({
     top: false,
@@ -77,40 +41,110 @@ export default function TemporaryDrawer() {
       return;
     }
 
+    console.log(anchor);
     setState({ ...state, [anchor]: open });
   };
 
+  const fetchData = async () => {
+    if (searchProduct === "") return;
+    console.log(searchProduct);
+    const citiesRef = firestore.collection("messages");
+    const snapshot = await citiesRef
+      .where("text", ">=", searchProduct)
+      .orderBy("text", "asc")
+      .limit(5)
+      .get();
+
+    const snapshot2 = await citiesRef.where("text", "==", searchProduct).get();
+
+    // const snapshot = await citiesRef
+    // .where("text" && "description", ">=", searchProduct)
+    // .get();
+
+    if (snapshot.empty) {
+      console.log("no matching documents");
+      return;
+    }
+
+    const list = [];
+
+    if (!snapshot2.empty) {
+      snapshot2.forEach((doc) => {
+        console.log(doc.data());
+
+        list.push(doc.data());
+      });
+    } else {
+      snapshot.forEach((doc) => {
+        console.log(doc.data());
+
+        list.push(doc.data());
+      });
+    }
+
+    setProducts(list);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [searchProduct]);
+
+  console.log(products);
+  console.log(searchProduct);
+
   const list = (anchor) => (
-    <Box sx={{ backgroundColor: "rgba(0,0,0,0.8)" }}>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder={t("search")}
-          inputProps={{ "aria-label": "search" }}
-        />
-      </Search>
+    <Box
+      className={
+        searchProduct === "" ? "main-section-drawer1" : "main-section-drawer2"
+      }
+    >
       <Box
-        sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 500 }}
-        role="presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
+        sx={{
+          backgroundColor: "rgba(0,0,0,0.5)",
+        }}
       >
-        <List></List>
-        <Divider />
-        {/* <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List> */}
+        <div className="main-search_input-Drawer">
+          <input
+            className="search_input-Drawer"
+            onChange={(e) => setSearchProduct(e.target.value)}
+            value={searchProduct}
+          />{" "}
+          <div className="search_icon_box-Drawer">
+            <SearchIcon className="search_icon-Drawer" />
+          </div>
+        </div>
+        <Box
+          sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 500 }}
+          role="presentation"
+          onClick={toggleDrawer(anchor, false)}
+          onKeyDown={toggleDrawer(anchor, false)}
+        >
+          <List></List>
+          <Divider />
+          <List>
+            {/* {products.map((text, index) => (
+            
+          ))} */}
+            {searchProduct !== "" ? (
+              products?.map((item) => (
+                <ListItem>
+                  <ListItemButton className="card_main-drawer">
+                    <ListItemIcon>
+                      <img src={item.img} className="card_img-drawer" />
+                      &nbsp;
+                      <Typography className="card_text-drawer">
+                        {item.text}
+                      </Typography>
+                    </ListItemIcon>
+                    <ListItemText />
+                  </ListItemButton>
+                </ListItem>
+              ))
+            ) : (
+              <></>
+            )}
+          </List>
+        </Box>
       </Box>
     </Box>
   );
@@ -123,7 +157,7 @@ export default function TemporaryDrawer() {
             {" "}
             <SearchIcon
               sx={{
-                display: { xs: "flex", md: "none", lg: "none" },
+                display: { xs: "flex", md: "flex", lg: "flex" },
                 color: "white",
               }}
             />

@@ -11,6 +11,7 @@ import CardList from "../CRUD/CardList/CardList";
 import Details from "../Details/Details";
 import Home from "../Home/Home";
 import OneChapterList from "../OneChapterList/OneChapterList";
+import ProductSearch from "../ProductSearch/ProductSearch";
 
 const MainRoutes = () => {
   const ROUTES = [
@@ -64,6 +65,11 @@ const MainRoutes = () => {
       path: "/update/:user",
       element: <AuthUpdateAva />,
       id: 10,
+    },
+    {
+      path: "/search",
+      element: <ProductSearch />,
+      id: 11,
     },
   ];
   const PRIVATE_ROUTES = [

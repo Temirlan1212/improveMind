@@ -5,15 +5,17 @@ import { useDispatch } from "react-redux";
 import { getCard } from "../../actions/GetCards";
 import { getOneCard } from "../../actions/GetOneProduct";
 import { addCard } from "../../slices/CardSlices/CardSlices";
+import { useNavigate } from "react-router-dom";
 
 const AddCard = () => {
   const [text, setText] = useState();
   const [description, setDescription] = useState();
   const [img, setImg] = useState();
-  const [year, setYear] = useState();
+  const [year, setYear] = useState(null);
   const cards = useSelector((state) => state.card.cards);
   console.log(img);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleValues = () => {
@@ -28,6 +30,8 @@ const AddCard = () => {
     setText("");
     setDescription("");
     setImg("");
+    setYear("");
+    navigate("/");
   };
 
   return (
