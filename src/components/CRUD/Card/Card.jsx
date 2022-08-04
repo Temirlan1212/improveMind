@@ -51,7 +51,7 @@ const Card = ({ elem }) => {
 
   console.log(elem.averageMark);
   return (
-    <div class="cards">
+    <div class="cards" data-aos="fade-up">
       <div
         class="card one"
         style={{

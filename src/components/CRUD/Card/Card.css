@@ -93,6 +93,7 @@ h1 {
 .content a:hover {
   background-position: right;
 }
+
 .ratingCard {
   display: flex;
   position: absolute;

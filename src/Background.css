@@ -1,4 +1,8 @@
 /* Setting up the Parallax Standard for the webpage */
+::-webkit-scrollbar-track {
+  box-shadow: none !important;
+  border-radius: none !important;
+}
 
 .parallax {
   position: relative;
@@ -18,7 +22,7 @@
 }
 
 .img1 {
-  background-image: url("https://doramalive.ru/local/lib/theme2/default/fon.jpg");
+  background-image: url("./img/fon.jpg");
   background-position: center;
 }
 
@@ -70,4 +74,24 @@
     width: 100%;
     height: 100%;
   }
+}
+
+.css-1gsv261 {
+  border-bottom: none !important;
+}
+
+.css-1aquho2-MuiTabs-indicator {
+  background-color: transparent !important;
+}
+
+.css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+}
+
+.css-1bfir1g-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: white !important;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
 }

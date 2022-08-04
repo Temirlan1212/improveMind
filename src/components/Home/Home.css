@@ -1,7 +1,7 @@
 /* Setting up the Parallax Standard for the webpage */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 1px;
+  height: 1px;
 }
 
 /* Track */
@@ -105,7 +105,7 @@
 }
 
 .img-home-1 {
-  background-image: url("https://doramalive.ru/local/lib/theme2/default/fon.jpg");
+  background-image: url("../../img/fon.jpg");
   background-position: center;
   height: 250vh;
 }

@@ -8,6 +8,7 @@ let CardSlices = createSlice({
   name: "card",
   initialState: {
     cards: [],
+    card: [],
     byAverageMark: [],
     byYear: [],
   },
@@ -42,7 +43,7 @@ let CardSlices = createSlice({
     },
     getOneProduct(state, action) {
       console.log("this is one product");
-      state.cards = action.payload;
+      state.card = action.payload;
     },
     updateProduct(state, action) {
       console.log(action.payload);
@@ -52,7 +53,7 @@ let CardSlices = createSlice({
           .collection("messages")
           .doc(action.payload.id)
           .update(action.payload.updates)
-          .then(() => console.log("updated successfuly"))
+          .then(() => console.log("updated successfully"))
           .catch((err) => {
             console.log("err", "=>", err);
           });

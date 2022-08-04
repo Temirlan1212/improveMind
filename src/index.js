@@ -5,6 +5,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import store from "./components/store/store";
 import LangRender from "./components/language/Translate/Translate";
+import AOS from "aos";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

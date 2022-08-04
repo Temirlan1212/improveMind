@@ -89,11 +89,13 @@ const Home = () => {
               ))}
             </div>
           </div>
+
           <div className="right-block-home">
             <div className="right-block-home-firstBlock"></div>
             <div className="right-block-home-secondBlock"></div>
           </div>
         </div>
+
         <Footer />
       </div>
     </div>

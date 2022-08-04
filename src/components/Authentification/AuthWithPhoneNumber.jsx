@@ -43,7 +43,7 @@ const AuthWithPhoneNumber = () => {
     if (countryNumber === "" || countryNumber === undefined) {
       return alert("Please enter a valid phone number");
     } else if (user !== null) {
-      alert("You has already in your account");
+      alert("You have already in your account");
 
       return;
     }

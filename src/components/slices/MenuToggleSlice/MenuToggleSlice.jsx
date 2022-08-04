@@ -5,6 +5,7 @@ let MenuToggleSlice = createSlice({
   initialState: {
     menuToggle: false,
     langToggle: false,
+    chapterToggle: false,
   },
   reducers: {
     menuToggleMiddle(state, action) {
@@ -15,7 +16,12 @@ let MenuToggleSlice = createSlice({
       console.log("toggleLang");
       state.langToggle = action.payload;
     },
+    chpaterToggleMiddle(state, action) {
+      console.log("chapterToggle");
+      state.chapterToggle = action.payload;
+    },
   },
 });
-export const { menuToggleMiddle, langToggleMiddle } = MenuToggleSlice.actions;
+export const { menuToggleMiddle, langToggleMiddle, chpaterToggleMiddle } =
+  MenuToggleSlice.actions;
 export default MenuToggleSlice.reducer;

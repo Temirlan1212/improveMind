@@ -14,6 +14,7 @@ let AuthSlice = createSlice({
   initialState: {
     email: [],
     error: [],
+    admin: false,
     stateAdd: false,
   },
   reducers: {
@@ -54,6 +55,9 @@ let AuthSlice = createSlice({
     onAuthChange(state, action) {
       console.log("this is on auth");
       state.email = action.payload;
+      if (action.payload.user === "ltemirlan2003@gmail.com") {
+        state.admin = true;
+      }
     },
   },
 });

@@ -1,3 +1,4 @@
+import { Upload } from "@mui/icons-material";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AuthAvaAdd from "../Authentification/AuthAvaAdd/AuthAvaAdd";
@@ -8,10 +9,14 @@ import AuthWithPhoneNumber from "../Authentification/AuthWithPhoneNumber";
 import SignIn from "../Authentification/SignIn";
 import AddCard from "../CRUD/AddCard/AddCard";
 import CardList from "../CRUD/CardList/CardList";
+import FullWidthTabs from "../Details/Comments/Comments";
 import Details from "../Details/Details";
 import Home from "../Home/Home";
 import OneChapterList from "../OneChapterList/OneChapterList";
+import Pagination from "../Pagination";
 import ProductSearch from "../ProductSearch/ProductSearch";
+import Form from "../progressList/Form";
+import ProgressList from "../progressList/ProgressList";
 
 const MainRoutes = () => {
   const ROUTES = [
@@ -70,6 +75,26 @@ const MainRoutes = () => {
       path: "/search",
       element: <ProductSearch />,
       id: 11,
+    },
+    {
+      path: "/comments",
+      element: <FullWidthTabs />,
+      id: 12,
+    },
+    {
+      path: "/pagination",
+      element: <Pagination />,
+      id: 13,
+    },
+    {
+      path: "/upload",
+      element: <Upload />,
+      id: 14,
+    },
+    {
+      path: "/form",
+      element: <Form />,
+      id: 15,
     },
   ];
   const PRIVATE_ROUTES = [

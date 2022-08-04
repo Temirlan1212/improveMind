@@ -16,7 +16,7 @@ const OneChapterList = () => {
   const storage = fire.storage();
   const params = useParams();
 
-  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUpload, setImageUpload] = useState([]);
   const [imageList, setImageList] = useState([]);
   console.log(imageList);
 
@@ -31,6 +31,7 @@ const OneChapterList = () => {
       });
     });
   };
+  console.log(imageUpload);
 
   const UploadImage = async () => {
     if (imageUpload === null) return;
@@ -63,9 +64,22 @@ const OneChapterList = () => {
         />
         <button onClick={UploadImage}>Upload Image</button>
       </div>
-      {imageList.map((items) =>
-        items === null ? "" : <img src={items} style={{ width: "400px" }} />
-      )}
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {imageList.map((items) =>
+          items === null ? (
+            ""
+          ) : (
+            <img src={items} style={{ width: "50vw", height: "100vh" }} />
+          )
+        )}
+      </div>
     </>
   );
 };

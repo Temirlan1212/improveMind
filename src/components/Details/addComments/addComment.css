@@ -1,0 +1,14 @@
+.addComm-open {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 200px;
+  color: white;
+  font-size: 15pt;
+  font-family: "PT Sans Narrow";
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  height: 40px;
+  cursor: pointer;
+}

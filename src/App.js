@@ -11,8 +11,11 @@ import Home from "./components/Home/Home";
 import MainRoutes from "./components/MainRoutes/MainRoutes";
 import { menuToggleMiddle } from "./components/slices/MenuToggleSlice/MenuToggleSlice";
 import { langToggleMiddle } from "./components/slices/MenuToggleSlice/MenuToggleSlice";
-
+import AOS from "aos";
 function App() {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   const dispatch = useDispatch();
   const toggle = useSelector((state) => state.menuToggle.menuToggle);
   const toggle2 = useSelector((state) => state.menuToggle.langToggle);

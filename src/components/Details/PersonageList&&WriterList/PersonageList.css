@@ -1,0 +1,86 @@
+.Details-btm-left_box-child1-info5 {
+  position: relative;
+}
+.Details-btm-left_box-child1-info5-child1 {
+  display: flex;
+  margin-top: 40px;
+}
+
+.info5-child1-active {
+  margin-right: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.info5-child1-disactive {
+  margin-right: 30px;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100px;
+  height: 40px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.Details-btm-left_box-child1-info5-child2 {
+  width: 100%;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  margin-top: 20px;
+  overflow-x: scroll;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.child1-info5-img {
+  margin-right: 10px;
+  position: relative;
+}
+
+.child1-info5-img div {
+  font-family: "PT Sans Narrow";
+  font-size: 20px;
+}
+
+.child1-info5-img img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+}
+.child1-info5-edit {
+  position: absolute;
+  bottom: 35px;
+  right: 10px;
+}
+.child1-info5-delete {
+  position: absolute;
+  bottom: 35px;
+  right: 0px;
+  background-color: rgba(177, 165, 0, 0.5);
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.child1-info5-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 400px) {
+  .child1-info5-add {
+    left: 250px;
+  }
+  .Details-btm-left_box-child1-info5-child1 {
+    flex-wrap: wrap;
+  }
+}
